@@ -11,6 +11,29 @@
 % Examples follow; please remove them in your project.
 
 :- use_module(src).
+:- use_module(api).
+
+:- begin_tests('convert_to_words').
+
+test('base case, empty list', [nondet]) :-
+    convert_to_words([], []).
+
+test('singleton list', [nondet]) :-
+    convert_to_words(
+        [json([word=chow, score=41896, numSyllables=1, tags=[n]])],
+        [word(chow, 1)]).
+
+test('more complex list', [nondet]) :-
+    convert_to_words(
+        [json([word=chow      , score=41896 , numSyllables=1 , tags=[n]])  , 
+         json([word=pewpew    , score=15697 , numSyllables=2 , tags=[n]])  , 
+         json([word=power     , score=34798 , numSyllables=2 , tags=[n]])  , 
+         json([word=chocolate , score=23199 , numSyllables=3 , tags=[n]])  , 
+         json([word=doggy     , score=02290 , numSyllables=2 , tags=[n]])] , 
+        [word(chow, 1), word(pewpew, 2), word(power, 2), word(chocolate, 3), word(doggy, 2)]).
+
+:- end_tests('convert_to_words').
+
 % :- begin_tests('member').
 
 % test('base case, singleton list', [nondet]) :-
