@@ -1,13 +1,3 @@
-# CPSC 312 Project
-
-Project Template for CPSC 312 Projects. Use this for both your proposal and final project submission.
-
-(Since you are submitting a link to a specific commit, we will be able to tell the difference.)
-
-The template to edit begins below. You can delete this header section once you've begun.
-
-We will post some additional material to include when you reach the final project stage.
-
 # Insert My Excellent Project Title Here
 
 This will be replaced with a very brief (one paragraph, 2-3 sentences) overview of the project.
@@ -20,12 +10,8 @@ This project is in fulfillment of the [CPSC 312 2021W1 project requirements](htt
 
 Our team is:
 
-+ Team Member Name 1 (student # 1): optional awesome nickname 1
-+ Team Member Name 2 (student # 2): optional awesome nickname 2
-+ If you have a third member: Team Member Name 3 (student # 3): optional awesome nickname 3
-+ If you have a fourth member: Team Member Name 4 (student # 4): optional awesome nickname 4
-
-We call ourselves: optional awesome team name.
++ Eric Kuo 58163288
++ Duy Nguyen 95844189
 
 ## Product Pitch
 
@@ -85,18 +71,6 @@ Also include instructions for us to test and run your code. (See our guidelines 
 A good goal to aim for is the top rubric item from proposal grading:
 
 > Fully functional proof-of-concept is easy to use and review, and it clearly demonstrates a key element necessary for the overall project.
-
-### How to test and run the code: Haskell
-
-Replace this section with instructions to us for how to test and run your code.
-
-As it is currently set up, editing works best if you first `cd` into the `haskell` subdirectory and open VS Code on that directory (`code .`). There is a `Makefile` with some helpful aliases, but you can also just use `stack` as normal.
-
-Note: We expect to be able to test your code by running `stack test`. Included among your tests should be some that demonstrate the core functionality of your code. (We will be running `make haskell-eval` from the project root.)
-
-We should be able to further explore your code's functionality by running `stack ghci`, and you should instruct us on some interesting cases to try.
-
-If you include instructions different from these, be **absolutely sure** that they will work well for us in whatever environment we run your code and that they will be as easy to use as the instructions above!
 
 ### How to test and run the code: Prolog
 

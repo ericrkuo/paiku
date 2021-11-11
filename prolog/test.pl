@@ -10,15 +10,11 @@
 
 % Examples follow; please remove them in your project.
 
-% member(X, List) is true if X appears in List.
-% It succeeds once for each occurrence in List.
-member(X, [X|_]).
-member(X, [_|Xs]) :- member(X, Xs).
-
+:- use_module(src).
 :- begin_tests('member').
 
 test('base case, singleton list', [nondet]) :-
-    member(1, [1]).
+    member1(1, [1]).
 
 test('base case, longer list', [nondet]) :-
     member(x, [x, y, z]).
