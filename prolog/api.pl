@@ -36,7 +36,7 @@ make_api_call(Topics, Json) :-
                 host('api.datamuse.com'),
                 path('/words'),
                 search([
-                    max=500,
+                    max=150,
                     md='s',
                     topics=Topics
                 ])
