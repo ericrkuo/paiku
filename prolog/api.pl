@@ -1,19 +1,17 @@
-:- module(api, [getWords/2, convert_to_words/2, make_api_call/2]).
+:- module(api, [get_words/2, convert_to_words/2, make_api_call/2]).
+
 :- use_module(library(http/http_open)).
 :- use_module(library(http/json)).
 :- use_module(library(http/json_convert)).
 :- use_module(library(http/http_client)).
 :- use_module(library(http/http_json)).
 
-% TODO write tests
-random_word_syllable(Word, Syllables).
-
 % word(Value, NumSyllables) indicates a word with the specified number of syllables
 
-% getWords returns a list of word(Value, NumSyllables) related to some topics
+% get_words returns a list of word(Value, NumSyllables) related to some topics
 % Topics is a comma separated string of no more than 5 topics
-% E.g. ?- getWords('food,dog,puppy', Words).
-getWords(Topics, Words) :-
+% E.g. ?- get_words('food,dog,puppy', Words).
+get_words(Topics, Words) :-
     make_api_call(Topics, Json),
     convert_to_words(Json, Words).
 
@@ -38,7 +36,7 @@ make_api_call(Topics, Json) :-
                 host('api.datamuse.com'),
                 path('/words'),
                 search([
-                    max=100,
+                    max=500,
                     md='s',
                     topics=Topics
                 ])
