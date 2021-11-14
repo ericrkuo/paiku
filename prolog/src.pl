@@ -52,6 +52,7 @@ same_syllable(N, word(_, N, _)).
 same_parts_of_speech(PoS, word(_, _, Type)) :- member(PoS, Type).
 get_value(word(Value, _, _), Value).
 
+% Picks a random word from Words that has N syllables and the specified parts of speech
 random_word_syllable(Word, Words, N, PoS) :-
     include(same_syllable(N), Words, Out1),
     include(same_parts_of_speech(PoS), Out1, Out2),
