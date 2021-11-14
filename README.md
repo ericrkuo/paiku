@@ -8,14 +8,14 @@ This project is in fulfillment of the [CPSC 312 2021W1 project requirements](htt
 
 Our team is:
 
-+ Eric Kuo 58163288
-+ Duy Nguyen 95844189
++ Eric Kuo
++ Duy Nguyen
 
 ## Product Pitch
 A Prolog Haiku:
-     >>Unification—
-      >>and backtracking predicates.
-      >>Throughout the seasons.
+       Unification—
+        and backtracking predicates.
+        Throughout the seasons.
 
 Originating from Japan, a Haiku is a short form of poetry consisting of three phrases or lines, with five syllables in the first line, seven in the second, and five in the third. Traditionally, Haikus carry a theme centered around nature and seasons, however, modern iterations can be about anything. 
 
