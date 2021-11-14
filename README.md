@@ -13,7 +13,7 @@ Our team is:
 
 ## Product Pitch
 A Prolog Haiku:
-       Unification—
+     >>Unification—
         and backtracking predicates.
         Throughout the seasons.
 
@@ -47,13 +47,15 @@ With the basic functionality for Paiku down, we plan on adding the following fea
     * Text to Speech - a neat fun feature that we could implement to make Paiku more interactive. Generated Haikus could be read aloud via a library that converts text to audio files that can be played (or some similar mechanism). 
 
 
-Glossary:
-- preposition: a word or group of words used before a Noun to show the Noun’s direction, time, place, location, spatial relationships, or to introduce an object. 
-- determiner: a word used before a Noun to identify the Noun in further detail. 
-- particle: a word that has a grammatical function but does not fit into the main parts of speech.
-- modifier: adds information to another element in the sentence and is a word, adjective, an adverb, or a phrase or clause.  
-
-
+### Glossary:
+preposition
+: a word or group of words used before a Noun to show the Noun’s direction, time, place, location, spatial relationships, or to introduce an object. 
+determiner
+: a word used before a Noun to identify the Noun in further detail. 
+particle
+: a word that has a grammatical function but does not fit into the main parts of speech.
+modifier
+: adds information to another element in the sentence and is a word, adjective, an adverb, or a phrase or clause.  
 
 ## Proof of Concept
 
