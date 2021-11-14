@@ -1,12 +1,24 @@
 :- module(src,[print_haiku/0, pick_random_word/2, filter_syllables/3, random_word_syllable/3]).
 :- use_module(api).
+:- use_module(library(readutil)).
+:- use_module(library(gensym)).
 
 /*
 Credits to: https://swish.swi-prolog.org/p/playing_with_wordnet.swinb
 */
 % TODO somehow encorproate IO, pass in the list of topics
-print_haiku :-
-    haiku_lines('burgers,soccer,basketball', Lines),
+
+%%%%%% START SCREEN %%%%%%
+
+% intro_prompt(S) is true if S is the intro prompt for our app
+intro_prompt(" ~~ Paiku ~~.\nYour number one haiku generator solution!.\nGive us topics in comma separated form!").
+
+% start/0 calls the starting Paiku UI.
+start :- intro_prompt(Prompt), writeln(Prompt), read_line_to_string(current_input, Topics), print_haiku(Topics). 
+
+% print_haiku/1 prints the haiku from the user specified topics
+print_haiku(Topics) :-
+    haiku_lines(Topics, Lines),
     format("~w~n~w~n~w~n", Lines).
 
 /*
