@@ -1,8 +1,6 @@
-# Insert My Excellent Project Title Here
+# Paiku??? (play on prolog and haiku lol idk)
 
-This will be replaced with a very brief (one paragraph, 2-3 sentences) overview of the project.
-
-Leave the following sentence in so you can easily link back to the requirements and *especially* rubric while editing your project:
+Using the robust pattern-matching and unification strengths of Prolog, our project will generate English haikus that will hopefully make semantic and grammatical sense.
 
 This project is in fulfillment of the [CPSC 312 2021W1 project requirements](https://steven-wolfman.github.io/cpsc-312-website/project.html).
 
@@ -14,42 +12,48 @@ Our team is:
 + Duy Nguyen 95844189
 
 ## Product Pitch
+A Prolog Haiku:
+     >>Unification—
+      >>and backtracking predicates.
+      >>Throughout the seasons.
 
-Replace this with a pitch for your project and the problem it solves. This is your vision for what the project
-would like like as a complete product, ready for awesome action. (Yes, awesomeness seems to be a theme.)
-It may be as short as a couple of paragraphs, or it may be longer. It should **definitely** take less than 4 minutes
-to read carefully and thoroughly.
+Originating from Japan, a Haiku is a short form of poetry consisting of three phrases or lines, with five syllables in the first line, seven in the second, and five in the third. Traditionally, Haikus carry a theme centered around nature and seasons, however, modern iterations can be about anything. 
 
-Be sure that this touches clearly on the [project requirements](https://steven-wolfman.github.io/cpsc-312-website/project.html#project-requirements).
+Our program, Paiku, will have the ability to generate (and maybe read aloud!) semantically correct haikus that are tailored towards the user. This means that Paiku will have some form of user input, such as words and themes, and use this to generate an appropriate haiku.  
 
-Good goals to aim for are from the top two rubric items for proposal grading:
+One of Prolog’s biggest features is unification. As English grammar can be broken down into disparate components: nouns, verbs, adjectives, modifiers, determiners, and particles, unification allows us to carefully order and reconstruct these small units into a structured form that is a haiku. Although this is obviously rudimentary and will not create haikus that have as much nuance as those written by poets, our project will create an opportunity for us to be exposed to:
+- How computers can process and represent languages
+- How the logic programming paradigm, compared to others, will help us create a semantic model for language
+- How can we use our broken down semantic model to expand our program and generate different forms of poetry
+- What APIs and libraries can we use to accurately simulate poetic devices such as rhymes
+- How we can potentially implement artificial intelligence to generate syntactically improved haikus
 
-> Exciting and language-appropriate product idea tackling a problem that is clearly compelling to a significant audience.
-
-Or:
-
-> Solid and language-appropriate product idea with a problem that is of real interest to the submitting team.
-
-(It's easy to focus on the product and not the problem. Remember to include both!)
+Through this project, we will be able to explore these concepts whilst applying current and newly learned Prolog ideas.
 
 ## Minimal Viable Project
+In our Proof of Concept, we employed various new language elements in order to explore the robustness and unique strengths of Prolog. We separated our codebase into two modules to clearly define which part is parsing data from our API and which part is actually generating the Haiku. Prolog also provides in-depth support for HTTP operations which we used to fetch words from an online source  (datamuse API), which is then converted into a format readable by Prolog using JSON. In addition we also used the library(readutil)) to manage IO operations. 
 
-Replace this with a description of the minimal viable project you will actually build for CPSC 312 (if this becomes your final project).
-It may be as short as a few paragraphs, or it may be longer. It should **definitely** take less than 4 minutes
-to read carefully and thoroughly.
+With the basic functionality for Paiku down, we plan on adding the following features:
+- Correct grammatical structure to our haiku using the tags that go with each word’s metadata. 
+    * Our current POC has a very limited and arbitrary semantic structure regardless of each word having a Parts of Speech (PoS) identifier. As such, we plan on using these identifiers to ‘place’ words into their syntactically correct positions. 
+- Better API calls and parsing
+    * Our current POC has a bug in that sometimes our API call doesn’t return any words that match the criteria and so when the haiku is generated, there are filler “N/A” words. We will look to improve this feature by studying more carefully what is the reason behind this bug and how we can use the API better.
+- Identify Parts of Speech that are currently labelled with a ‘u’ tag. 
+    * Some entries on the Datamuse API aren’t categorised into any PoS, even though in regular English they can be categorised into several subcategories: prepositions, determiners, particles, modifiers. In our MVP, we will incorporate these subcategories by creating our own predicates that sort and identify words labelled with a ‘u’ tag.
+- Potentially look at using Definite Clause Grammars (DCGs) to represent grammatical relationships
+    * DCGs are a Prolog tool that can be used to parse and tag text. As generating a haiku is an extremely constrained task, we could use existing methods to restrain the structure of our words. However, as we are primarily concerned with generating Haikus, we can ignore other possible English nuances. Thus, we could just hard code the grammatical structure as  it might be cumbersome to include an extra step.
+- Flashy Features - two features that we think could be fun as well as education to explore:
+    * Artificial Intelligence - some way to increase the accuracy of our Haiku by providing more powerful natural language processing methods that involve AI. This way, we could potentially introduce more complex language and poetic devices such as tonality, word sounds (i.e. plosives, sibilance, etc.), and word connotations.
+    * Text to Speech - a neat fun feature that we could implement to make Paiku more interactive. Generated Haikus could be read aloud via a library that converts text to audio files that can be played (or some similar mechanism). 
 
-Make clear:
-+ how this builds meaningfully toward your product pitch above, without being nearly as much work,
-+ how it builds on the strength and power of the language, and
-+ how it leads naturally to learning and applying some new element of the language (including what that element is!)
 
-Good goals to aim for are from the top two rubric items for proposal grading:
+Glossary:
+- preposition: a word or group of words used before a Noun to show the Noun’s direction, time, place, location, spatial relationships, or to introduce an object. 
+- determiner: a word used before a Noun to identify the Noun in further detail. 
+- particle: a word that has a grammatical function but does not fit into the main parts of speech.
+- modifier: adds information to another element in the sentence and is a word, adjective, an adverb, or a phrase or clause.  
 
-> The minimal viable project (MVP) builds on the strengths and power of the language in exciting ways that will clearly lead to excellent learning for students.
 
-Or:
-
-> The MVP clearly builds significantly on the language and will lead in interesting and natural ways to learning for the students.
 
 ## Proof of Concept
 
