@@ -15,15 +15,17 @@ get_words(Topics, Words) :-
     make_api_call(Topics, Json),
     convert_to_words(Json, Words).
 
-% convert_to_words takes a Prolog Term representing JSON and expresses it as a list of word(Value, NumSyllables)
+% convert_to_words takes a Prolog Term representing JSON and expresses it as a list of word(Value, NumSyllables, Tags)
 convert_to_words([], []).
 convert_to_words([json(H)|T], Words) :-
     Field1 = 'word',
     Field2 = 'numSyllables',
+    Field3 = 'tags',
     member(Field1=Value, H),
     member(Field2=NumSyllables, H),
+    (member(Field3=Type, H); Type =[u]),
     convert_to_words(T, RestOfWords),
-    Words = [word(Value, NumSyllables) | RestOfWords].
+    Words = [word(Value, NumSyllables, Type) | RestOfWords].
 
 % make the API call to the /words endpoint of https://www.datamuse.com/api/
 % query parameters include
@@ -37,7 +39,7 @@ make_api_call(Topics, Json) :-
                 path('/words'),
                 search([
                     max=150,
-                    md='s',
+                    md='sp',
                     topics=Topics
                 ])
             ], In, []),
