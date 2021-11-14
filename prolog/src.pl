@@ -6,7 +6,7 @@
 %%%%%% START SCREEN %%%%%%
 
 % intro_prompt(S) is true if S is the intro prompt for our app
-intro_prompt(" ~~ Paiku ~~.\nYour number one haiku generator solution!.\nGive us 1-5 topics in comma separated form with single quotations!\ni.e. 'soccer,dot,monster'").
+intro_prompt(" ~~ Paiku ~~.\nYour number one haiku generator!.\nPlease provide 1-5 topics in comma separated form (i.e. soccer,dot,monster)").
 
 % start/0 calls the starting Paiku UI.
 start :- intro_prompt(Prompt), writeln(Prompt), read_line_to_string(current_input, Topics), print_haiku(Topics). 
@@ -43,7 +43,7 @@ line2(Line, Words, 7) :-
     atomic_list_concat([W1, W2, W3, W4], ' ', Line).
 
 line3(Line, Words, 5) :- 
-    random_word_syllable(W1, Words, 1, u),
+    random_word_syllable(W1, Words, 1, v),
     random_word_syllable(W2, Words, 2, n),
     random_word_syllable(W3, Words, 2, adj),
     atomic_list_concat([W1, W2, W3], ' ', Line).
@@ -53,15 +53,22 @@ same_parts_of_speech(PoS, word(_, _, Type)) :- member(PoS, Type).
 get_value(word(Value, _, _), Value).
 
 % Picks a random word from Words that has N syllables and the specified parts of speech
+/*
+1. Filter words that have N syllables, store in Out1
+2. Filter Out1 for words that have the specified PoS, store in Out2
+3. Get the value of the words from Out2 (these are words that have N syllables and the PoS)
+4. Get the value of the words from Out1 (these are words that have N syllables)
+5. Pick a random word.
+*/
 random_word_syllable(Word, Words, N, PoS) :-
     include(same_syllable(N), Words, Out1),
     include(same_parts_of_speech(PoS), Out1, Out2),
-    maplist(get_value, Out2, Result),
-    maplist(get_value, Out1, WordValues),
-    pick_random_word(Word, Result, WordValues).
+    maplist(get_value, Out2, SamePoSAndSyllableWords),
+    maplist(get_value, Out1, SameSyllableWords),
+    pick_random_word(Word, SamePoSAndSyllableWords, SameSyllableWords).
 
-% pick_random_word(Word, PoSWords, SameSyllableWords) chooses a random Word from Words
-% if there are no parts of speech words, we choose from same syllable words
+% pick_random_word(Word, SamePoSAndSyllableWords, SameSyllableWords) chooses a random Word from SamePoSAndSyllableWords
+% if there are no parts of speech words, we choose from SameSyllableWords
 pick_random_word("N/A", [], []).
 pick_random_word(Word, [], SameSyllableWords) :- random_member(Word, SameSyllableWords).
-pick_random_word(Word, PoSWords, _) :- random_member(Word, PoSWords).
+pick_random_word(Word, SamePoSAndSyllableWords, _) :- random_member(Word, SamePoSAndSyllableWords).
