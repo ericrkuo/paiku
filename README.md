@@ -13,9 +13,9 @@ Our team is:
 
 ## Product Pitch
 A Prolog Haiku:
-     >>Unification—
-        and backtracking predicates.
-        Throughout the seasons.
+     > Unification—
+     >  and backtracking predicates.
+     >  Throughout the seasons.
 
 Originating from Japan, a Haiku is a short form of poetry consisting of three phrases or lines, with five syllables in the first line, seven in the second, and five in the third. Traditionally, Haikus carry a theme centered around nature and seasons, however, modern iterations can be about anything. 
 
@@ -48,14 +48,10 @@ With the basic functionality for Paiku down, we plan on adding the following fea
 
 
 ### Glossary:
-preposition
-: a word or group of words used before a Noun to show the Noun’s direction, time, place, location, spatial relationships, or to introduce an object. 
-determiner
-: a word used before a Noun to identify the Noun in further detail. 
-particle
-: a word that has a grammatical function but does not fit into the main parts of speech.
-modifier
-: adds information to another element in the sentence and is a word, adjective, an adverb, or a phrase or clause.  
+- preposition: a word or group of words used before a Noun to show the Noun’s direction, time, place, location, spatial relationships, or to introduce an object. 
+- determiner: a word used before a Noun to identify the Noun in further detail. 
+- particle: a word that has a grammatical function but does not fit into the main parts of speech.
+- modifier: adds information to another element in the sentence and is a word, adjective, an adverb, or a phrase or clause.  
 
 ## Proof of Concept
 
