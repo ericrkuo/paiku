@@ -1,21 +1,19 @@
-:- module(src,[start/0, print_haiku/1, pick_random_word/2, filter_syllables/4, random_word_syllable/4]).
+:- module(src,[start/0, print_haiku/1, pick_random_word/3, random_word_syllable/4, same_syllable/2, same_parts_of_speech/2, get_value/2]).
 :- use_module(api).
 :- use_module(library(readutil)).
 
 
-/*
-Credits to: https://swish.swi-prolog.org/p/playing_with_wordnet.swinb
-*/
-% TODO somehow encorproate IO, pass in the list of topics
-
 %%%%%% START SCREEN %%%%%%
 
 % intro_prompt(S) is true if S is the intro prompt for our app
-intro_prompt(" ~~ Paiku ~~.\nYour number one haiku generator solution!.\nGive us 1- 5 topics in comma separated form with single quotations!\ni.e. 'soccer,dot,monster'").
+intro_prompt(" ~~ Paiku ~~.\nYour number one haiku generator solution!.\nGive us 1-5 topics in comma separated form with single quotations!\ni.e. 'soccer,dot,monster'").
 
 % start/0 calls the starting Paiku UI.
 start :- intro_prompt(Prompt), writeln(Prompt), read_line_to_string(current_input, Topics), print_haiku(Topics). 
 
+/*
+Credits to: https://swish.swi-prolog.org/p/playing_with_wordnet.swinb
+*/
 % print_haiku/1 prints the haiku from the user specified topics
 print_haiku(Topics) :-
     haiku_lines(Topics, Lines),
@@ -31,14 +29,6 @@ haiku_lines(Topics, [Line1, Line2, Line3]) :-
     line3(Line3, Words, 5).
 
 % generates a line in a haiku with 5 or 7 number of syllables
-
-% Duy
-% TODO write tests
-% Mandatory - ask user for prompts
-%             i.e. list of topics (maximum 5) and somehow pass that in
-% - some kind of randomness in terms of number of words
-% - some kind of grammar (verbs, nouns, determiners)
-% - text to speech
 
 line1(Line, Words, 5) :- 
     random_word_syllable(W1, Words, 3, n),
@@ -58,23 +48,19 @@ line3(Line, Words, 5) :-
     random_word_syllable(W3, Words, 2, adj),
     atomic_list_concat([W1, W2, W3], ' ', Line).
 
+same_syllable(N, word(_, N, _)).
+same_parts_of_speech(PoS, word(_, _, Type)) :- member(PoS, Type).
+get_value(word(Value, _, _), Value).
 
-
-% Picks a random word from Words that has N syllables and Type.
 random_word_syllable(Word, Words, N, PoS) :-
-    filter_syllables(Result, Words, N, PoS),
-    pick_random_word(Word, Result).
+    include(same_syllable(N), Words, Out1),
+    include(same_parts_of_speech(PoS), Out1, Out2),
+    maplist(get_value, Out2, Result),
+    maplist(get_value, Out1, WordValues),
+    pick_random_word(Word, Result, WordValues).
 
-% filter_syllables(Result, Words, N, Type) filters each word(Value, NumSyllables, Type) in Words that have N syllables and Type
-% and produces a Result list of the Value's of each word
-filter_syllables([], [], _, _).
-filter_syllables(Result, [word(Value, N, Type)|List], N, PoS) :-
-    member(PoS, Type),
-    filter_syllables(Temp, List, N, PoS),
-    Result = [Value | Temp].
-filter_syllables(Result, [_|List], N, PoS) :-
-    filter_syllables(Result, List, N, PoS).
-
-% pick_random_word(Word, Words) chooses a random Word from Words
-pick_random_word("N/A", []).
-pick_random_word(Word, Words) :- random_member(Word, Words).
+% pick_random_word(Word, PoSWords, SameSyllableWords) chooses a random Word from Words
+% if there are no parts of speech words, we choose from same syllable words
+pick_random_word("N/A", [], []).
+pick_random_word(Word, [], SameSyllableWords) :- random_member(Word, SameSyllableWords).
+pick_random_word(Word, PoSWords, _) :- random_member(Word, PoSWords).

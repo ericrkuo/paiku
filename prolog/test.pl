@@ -24,16 +24,16 @@ test('base case, empty list', [nondet]) :-
 test('singleton list', [nondet]) :-
     convert_to_words(
         [json([word=chow, score=41896, numSyllables=1, tags=[n]])],
-        [word(chow, 1)]).
+        [word(chow, 1, [n])]).
 
 test('more complex list', [nondet]) :-
     convert_to_words(
         [json([word=chow      , score=41896 , numSyllables=1 , tags=[n]])  , 
-         json([word=pewpew    , score=15697 , numSyllables=2 , tags=[n]])  , 
-         json([word=power     , score=34798 , numSyllables=2 , tags=[n]])  , 
+         json([word=pewpew    , score=15697 , numSyllables=2 , tags=[v]])  , 
+         json([word=power     , score=34798 , numSyllables=2 , tags=[adj]])  , 
          json([word=chocolate , score=23199 , numSyllables=3 , tags=[n]])  , 
          json([word=doggy     , score=02290 , numSyllables=2 , tags=[n]])] , 
-        [word(chow, 1), word(pewpew, 2), word(power, 2), word(chocolate, 3), word(doggy, 2)]).
+        [word(chow, 1, [n]), word(pewpew, 2, [v]), word(power, 2, [adj]), word(chocolate, 3, [n]), word(doggy, 2, [n])]).
 
 :- end_tests('convert_to_words').
 
@@ -44,59 +44,69 @@ test('more complex list', [nondet]) :-
 :- begin_tests('random_word_syllable').
 
 test('base case - empty words to choose from', [nondet]) :-
-    random_word_syllable("N/A", [], 2),
-    random_word_syllable("N/A", [], 0).
+    random_word_syllable("N/A", [], 2, n),
+    random_word_syllable("N/A", [], 0, n).
 
 test('should find a random word with corresponding syllables - 2 syllables', [nondet]) :-
     random_word_syllable(
         Word,
-        [word(sport, 1), word(matchup, 2), word(upper, 2), word(walker, 2), word(wedge, 1), word(backgammon, 3)],
-        2),
+        [
+            word(sport, 1, [n]),
+            word(matchup, 2, [n]),
+            word(upper, 2, [n]),
+            word(walker, 2, [n]),
+            word(wedge, 1, [n]),
+            word(backgammon, 3, [n])
+        ],
+        2,
+        n),
     member(Word, [matchup, upper, walker]).
 
 test('should find a random word with corresponding syllables - 3 syllables', [nondet]) :-
     random_word_syllable(
         Word,
-        [word(sport, 1), word(matchup, 2), word(upper, 2), word(walker, 2), word(wedge, 1), word(backgammon, 3)],
-        3),
+        [
+            word(sport, 1, [n]),
+            word(matchup, 2, [n]),
+            word(upper, 2, [n]),
+            word(walker, 2, [n]),
+            word(wedge, 1, [n]),
+            word(backgammon, 3, [n])
+        ],
+        3,
+        n),
     member(Word, [backgammon]).
+
+test('should find a random word with corresponding syllables and parts of speech', [nondet]) :-
+    random_word_syllable(
+        Word,
+        [
+            word(sport, 1, [n]),
+            word(matchup, 2, [v]),
+            word(upper, 2, [v]),
+            word(walker, 2, [n]),
+            word(wedge, 1, [n]),
+            word(backgammon, 3, [n])
+        ],
+        2,
+        v),
+    member(Word, [matchup, upper]).
 
 test('should not fail if no words found with number of syllables', [nondet]) :-
     random_word_syllable(
         "N/A",
-        [word(sport, 1), word(matchup, 2), word(upper, 2), word(walker, 2), word(wedge, 1), word(backgammon, 3)],
-        200).
+        [
+            word(sport, 1, [n]),
+            word(matchup, 2, [n]),
+            word(upper, 2, [n]),
+            word(walker, 2, [n]),
+            word(wedge, 1, [n]),
+            word(backgammon, 3, [n])
+        ],
+        200,
+        n).
 
 :- end_tests('random_word_syllable').
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% filter_syllables tests
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-:- begin_tests('filter_syllables').
-
-test('base case - empty words to choose from', [nondet]) :-
-    filter_syllables([], [], 2),
-    filter_syllables([], [], 0).
-
-test('should filter words with corresponding syllables - 2 syllables', [nondet]) :-
-    filter_syllables(
-        [matchup, upper, walker],
-        [word(sport, 1), word(matchup, 2), word(upper, 2), word(walker, 2), word(wedge, 1), word(backgammon, 3)],
-        2).
-
-test('should filter words with corresponding syllables - 3 syllables', [nondet]) :-
-    filter_syllables(
-        [backgammon],
-        [word(sport, 1), word(matchup, 2), word(upper, 2), word(walker, 2), word(wedge, 1), word(backgammon, 3)],
-        3).
-
-test('should not fail if no words found with number of syllables', [nondet]) :-
-    filter_syllables(
-        [],
-        [word(sport, 1), word(matchup, 2), word(upper, 2), word(walker, 2), word(wedge, 1), word(backgammon, 3)],
-        200).
-
-:- end_tests('filter_syllables').
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% pick_random_word tests
@@ -104,19 +114,48 @@ test('should not fail if no words found with number of syllables', [nondet]) :-
 :- begin_tests('pick_random_word').
 
 test('base case - empty words to choose from', [nondet]) :-
-    pick_random_word("N/A", []).
+    pick_random_word("N/A", [], []).
 
 test('Should correctly find word', [nondet]) :-
     TestList = [a,b,c,d,e,f],
-    pick_random_word(X, TestList),
+    pick_random_word(X, TestList, TestList),
+    member(X, TestList).
+
+test('Should choose word from second argument if first empty', [nondet]) :-
+    TestList = [a,b,c,d,e,f],
+    pick_random_word(X, [], TestList),
     member(X, TestList).
 
 test('fail if word not from List', [fail]) :-
     TestList = [a,b,c,d,e,f],
-    pick_random_word(hello, TestList).
+    pick_random_word(hello, TestList, TestList).
 
 :- end_tests('pick_random_word').
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% utility predicates
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+:- begin_tests('util_predicates').
+
+test('same_syllable should fail', [fail]) :-
+    same_syllable(3, word(hi, 2, [n])).
+
+test('same_parts_of_speech should fail', [fail]) :-
+    same_parts_of_speech(v, word(hi, 2, [n])).
+
+test('get_value should fail', [fail]) :-
+    get_value(word(hi, 2, [n]), hello).
+
+test('same_syllable should be true if same syllable', [nondet]) :-
+    same_syllable(2, word(hi, 2, [n])).
+
+test('same_parts_of_speech should be true if same parts of speech', [nondet]) :-
+    same_parts_of_speech(n, word(hi, 2, [n])).
+
+test('get_value should get value of word', [nondet]) :-
+    get_value(word(hi, 2, [n]), hi).
+
+:- end_tests('util_predicates').
 
 /*
 Tests provided to us from project template - keeping here for future reference
