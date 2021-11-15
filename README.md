@@ -12,74 +12,128 @@ Our team is:
 + Duy Nguyen
 
 ## Product Pitch
-A Prolog Haiku:
-     > Unification—
-     >  and backtracking predicates.
-     >  Throughout the seasons.
+A Prolog Haiku ([credits]()):
+> _Unification—_  
+>  _and backtracking predicates._  
+>  _Throughout the seasons._  
 
 Originating from Japan, a Haiku is a short form of poetry consisting of three phrases or lines, with five syllables in the first line, seven in the second, and five in the third. Traditionally, Haikus carry a theme centered around nature and seasons, however, modern iterations can be about anything. 
 
-Our program, Paiku, will have the ability to generate (and maybe read aloud!) semantically correct haikus that are tailored towards the user. This means that Paiku will have some form of user input, such as words and themes, and use this to generate an appropriate haiku.  
+Our project, Paiku, will prompt a user for a set of topics surrounding the desired theme of their haiku and will have the ability to generate (and maybe read aloud!) semantically correct haikus.
 
-One of Prolog’s biggest features is unification. As English grammar can be broken down into disparate components: nouns, verbs, adjectives, modifiers, determiners, and particles, unification allows us to carefully order and reconstruct these small units into a structured form that is a haiku. Although this is obviously rudimentary and will not create haikus that have as much nuance as those written by poets, our project will create an opportunity for us to be exposed to:
+One of Prolog’s biggest features is unification. As English grammar can be broken down into disparate components: nouns, verbs, adjectives, modifiers, determiners, and particles, unification allows us to carefully order and reconstruct these small units into a structured form that is a haiku. Although Paiku is obviously rudimentary and will not create haikus that have as much nuance as those written by poets, our project will create an opportunity for us to be exposed to:
 - How computers can process and represent languages
-- How the logic programming paradigm, compared to others, will help us create a semantic model for language
-- How can we use our broken down semantic model to expand our program and generate different forms of poetry
-- What APIs and libraries can we use to accurately simulate poetic devices such as rhymes
-- How we can potentially implement artificial intelligence to generate syntactically improved haikus
+- How the logic programming paradigm, compared to others, can help create a semantic model for representing haikus.
+- How we can expand our semantic model to generate other poetic forms (e.g. nursary rhymes, sonnets, etc.)
+- What APIs and packages can we leverage to collect a dataset of words and to accurately simulate poetic devices such as rhymes
+- How we can incorproate natural language processing to generate syntactically improved haikus
 
-Through this project, we will be able to explore these concepts whilst applying current and newly learned Prolog ideas.
+These are some questions we were curious about when first learning Prolog and by combining our passion for poetry, we think larger audiences would also be curious how feasible this is with Prolog.
 
 ## Minimal Viable Project
-In our Proof of Concept, we employed various new language elements in order to explore the robustness and unique strengths of Prolog. We separated our codebase into two modules to clearly define which part is parsing data from our API and which part is actually generating the Haiku. Prolog also provides in-depth support for HTTP operations which we used to fetch words from an online source  (datamuse API), which is then converted into a format readable by Prolog using JSON. In addition we also used the library(readutil)) to manage IO operations. 
+In our proof-of-concept (POC), we employed various new language elements in order to explore the robustness and unique strengths of Prolog. With the basic functionality for Paiku down, we can focus more time on really leveraging the full capabilities of Prolog. We plan on refining the following concepts and incorporating the specified features:
 
-With the basic functionality for Paiku down, we plan on adding the following features:
-- Correct grammatical structure to our haiku using the tags that go with each word’s metadata. 
-    * Our current POC has a very limited and arbitrary semantic structure regardless of each word having a Parts of Speech (PoS) identifier. As such, we plan on using these identifiers to ‘place’ words into their syntactically correct positions. 
-- Better API calls and parsing
-    * Our current POC has a bug in that sometimes our API call doesn’t return any words that match the criteria and so when the haiku is generated, there are filler “N/A” words. We will look to improve this feature by studying more carefully what is the reason behind this bug and how we can use the API better.
-- Identify Parts of Speech that are currently labelled with a ‘u’ tag. 
-    * Some entries on the Datamuse API aren’t categorised into any PoS, even though in regular English they can be categorised into several subcategories: prepositions, determiners, particles, modifiers. In our MVP, we will incorporate these subcategories by creating our own predicates that sort and identify words labelled with a ‘u’ tag.
-- Potentially look at using Definite Clause Grammars (DCGs) to represent grammatical relationships
-    * DCGs are a Prolog tool that can be used to parse and tag text. As generating a haiku is an extremely constrained task, we could use existing methods to restrain the structure of our words. However, as we are primarily concerned with generating Haikus, we can ignore other possible English nuances. Thus, we could just hard code the grammatical structure as  it might be cumbersome to include an extra step.
-- Flashy Features - two features that we think could be fun as well as education to explore:
-    * Artificial Intelligence - some way to increase the accuracy of our Haiku by providing more powerful natural language processing methods that involve AI. This way, we could potentially introduce more complex language and poetic devices such as tonality, word sounds (i.e. plosives, sibilance, etc.), and word connotations.
-    * Text to Speech - a neat fun feature that we could implement to make Paiku more interactive. Generated Haikus could be read aloud via a library that converts text to audio files that can be played (or some similar mechanism). 
+### Expressing Grammer and Definite Clause Grammaers (DCGs)
+- Our current POC parses and filters words by their Parts of Speech (PoS) identifier, but not to its full extent as each line in our haiku has a very limited grammatical structure. As such, we plan on using these identifiers to "place" words into their syntactically correct positions. This can be accomplished using DCGs to express more complex grammatical relationships in our haikus.
 
+### APIs and error handling
+- Our POC gave us an opportunity to further explore how HTTP requests are handled in Prolog. We used the [Datamuse API](https://www.datamuse.com/api/) to generate words and parse the metadata from them (e.g. number of syllables, parts of speech).
+- We also plan on exploring industry standards for error handling in Prolog. An area in our code we want to focus on is handling situations where our API calls fail. 
+- Some ideas we want to learn are how to make our predicates more robust. For example, how we can propagate error messages from the API to the user, or perform some behaviour based on the error codes returned from the API.
 
-### Glossary:
-- preposition: a word or group of words used before a Noun to show the Noun’s direction, time, place, location, spatial relationships, or to introduce an object. 
-- determiner: a word used before a Noun to identify the Noun in further detail. 
-- particle: a word that has a grammatical function but does not fit into the main parts of speech.
-- modifier: adds information to another element in the sentence and is a word, adjective, an adverb, or a phrase or clause.  
+### Extend parts of speech identifiers. 
+- The Datamuse API is used primarily for finding words relating to some topic. However, the API does not have much support for other PoS identifiers like prepositions, determiners, particles, and modifiers. In our MVP, we plan on manually adding words from these parts of speech categories so that the grammatical structure of our haiku's can be improved.
+
+### Flashy Features - two features that we think could be fun and educative to explore:
+- We acknolwedge that these features may not be feasible in the timeline we have, but are concepts we are curious about and plan on exploring outside of CPSC 312.
+- NLP - some way to improve the accuracy of our Haiku by providing more powerful natural language processing methods that involve AI. This way, we could potentially introduce more complex language and poetic devices such as tonality, word sounds (i.e. plosives, sibilance, etc.), and word connotations.
+- Text to Speech - a neat fun feature that we could implement to make Paiku more interactive. Generated Haikus could be read aloud via some package or lirary. 
 
 ## Proof of Concept
 
-Replace this with a description of your proof-of-concept. This may be as short as a few paragraphs, or it may be longer.
-It should **definitely** take less than 4 minutes to read carefully and thoroughly, though working through and running the
-code may take an extra 4 minutes. (Your guidance and links should make it easy for us to work through the code.)
+At a high-level, our proof-of-concept focuses on expressing the 5-7-5 syllable structure of Haikus. We've separated our code into two main modules, [src.pl](https://github.students.cs.ubc.ca/ngduy28/cpsc-312-project-prolog/blob/poc/prolog/src.pl) (focuses on the core logic) and [api.pl](https://github.students.cs.ubc.ca/ngduy28/cpsc-312-project-prolog/blob/poc/prolog/api.pl) (makes API calls). In more detail, it consists of the following:
 
-Tell us:
+### 1. A way to outline the basic structure of a haiku
+Given a dataset of words and their syllables, our program will generate each line of a haiku while adhering to the number of syllables needed. The basic structure of our haiku is expressed with the predicate [haiku_lines/2](https://github.students.cs.ubc.ca/ngduy28/cpsc-312-project-prolog/blob/poc/prolog/src.pl#L22-L29).
 
-+ what key element of your project the proof-of-concept focuses on
-+ what makes that such an important element
-+ how completing this gives you confidence that, with sufficient work, you could complete the full (minimal viable) project
+As seen, we create each line separately using the predicates [line1/3, line2/3, line3/3](https://github.students.cs.ubc.ca/ngduy28/cpsc-312-project-prolog/blob/poc/prolog/src.pl#L33-L49) and ensure that the number of syllables are met. 
 
-Include links (likely even line-level links, which are easy to create in Github) throughout to critical pieces of
-the code to make it easy for us to understand what you've accomplished and how it fulfills the requirements.
+These predicates rely on [random_word_syllable/4](https://github.students.cs.ubc.ca/ngduy28/cpsc-312-project-prolog/blob/e3d3a2959ad35c821d0deaf29684ebbb2209a826/prolog/src.pl#L55-L68) to find words matching the desired number of syllables and parts of speech.
+- This was also an opportunity for us to explore and take advantage of Prolog's built-in predicates for operating on lists such as [include/3](https://www.swi-prolog.org/pldoc/doc_for?object=include/3) and [maplist/2](https://www.swi-prolog.org/pldoc/man?predicate=maplist/2).
 
-Also include instructions for us to test and run your code. (See our guidelines below.)
+### 2. Gathering a dataset of words and parsing metadata
+We leveraged the word-finding capabilities of the [datamuse API](https://www.datamuse.com/api/) to get our dataset of words. The API endpoint `/words` procuces the number of syllables for each word returned and lists out the parts of speech identifiers. An example response form the API is:
 
-A good goal to aim for is the top rubric item from proposal grading:
+```json
+// GET request https://api.datamuse.com/words?max=500&md=sp&topics=burger,soccer,basketball
+[
+    {
+        "word": "fire",
+        "score": 11546,
+        "numSyllables": 2,
+        "tags": [
+            "n"
+        ]
+    },
+    {
+        "word": "van",
+        "score": 11519,
+        "numSyllables": 1,
+        "tags": [
+            "n"
+        ]
+    }
+]
+```
 
-> Fully functional proof-of-concept is easy to use and review, and it clearly demonstrates a key element necessary for the overall project.
+To get the API working, we used [Prolog's HTTP client libraries](https://www.swi-prolog.org/pldoc/doc_for?object=section(%27packages/http.html%27)) to send requests and to also convert from JSON to Prolog terms (which was more difficult than anticipated, but ended up being less code and more succinct than we anticipated).
 
-### How to test and run the code: Prolog
+- [get_words/2](https://github.students.cs.ubc.ca/ngduy28/cpsc-312-project-prolog/blob/e3d3a2959ad35c821d0deaf29684ebbb2209a826/prolog/api.pl#L11-L16) - predicate that our haiku uses to get words
+- [convert_to_words/2](https://github.students.cs.ubc.ca/ngduy28/cpsc-312-project-prolog/blob/e3d3a2959ad35c821d0deaf29684ebbb2209a826/prolog/api.pl#L18-L28) - converts a JSON response from the API to a list of words where each word is a compound term `word(Value, NumSyllables, PoS)`.
+- [make_api_call/2](https://github.students.cs.ubc.ca/ngduy28/cpsc-312-project-prolog/blob/e3d3a2959ad35c821d0deaf29684ebbb2209a826/prolog/api.pl#L30-L48) - sends the HTTP request
 
-Replace this section with instructions to us for how to test and run your code.
+### 3. Curating the haiku to some set of topics
 
-We have set up a simple test file for you to extend using [Prolog Unit Testing](https://www.swi-prolog.org/pldoc/doc_for?object=section(%27packages/plunit.html%27)) library for testing. Included among your tests should be some that demonstrate the core functionality of your code. Please remove the example tests before you submit or you will lose marks. (We will be running `make prolog-eval` from the project root.)
+A key feature of our proof-of-concept is generating Haiku’s centered around some theme. This is accomplished by using IO to prompt the user for some topics before generating a Haiku, and then passing those topics to the datamuse API which skews results towards these topics.
+- [topics query parameter](https://github.students.cs.ubc.ca/ngduy28/cpsc-312-project-prolog/blob/e3d3a2959ad35c821d0deaf29684ebbb2209a826/prolog/api.pl#L43)
+- [IO - prompting the user for topics](https://github.students.cs.ubc.ca/ngduy28/cpsc-312-project-prolog/blob/e3d3a2959ad35c821d0deaf29684ebbb2209a826/prolog/src.pl#L12)
 
-In the `prolog` directory, you can run `make test` to run the unit tests. You can also load the test file into the swipl repl with `make test-repl` and in that repl you can run `run_tests.` to run those tests.
+### 4. Parts of Speech and expressing basic grammar
 
-If you include instructions different from these, be **absolutely sure** that they will work well for us in whatever environment we run your code and that they will be as easy to use as the instructions above!
+The datamuse API also returns tags which identify the parts of speech for each word. We collect this metadata and can express the basic grammar of our haiku by finding words that match a parts of speech identifer.
+
+- [line1/3, line2/3, line3/3](https://github.students.cs.ubc.ca/ngduy28/cpsc-312-project-prolog/blob/poc/prolog/src.pl#L33-L49) search for specific parts of speech identifiers.
+- [random_word_syllable/4](https://github.students.cs.ubc.ca/ngduy28/cpsc-312-project-prolog/blob/e3d3a2959ad35c821d0deaf29684ebbb2209a826/prolog/src.pl#L65) filters parts of speech
+
+### How this illustrates a key element of our project and why it’s important:
+
+Getting the dataset of words and defining predicates to express the 5-7-5 structure of our Haiku gives us more confidence that the core logic of Paiku works and is feasible to implement. We’ve also added multiple unit tests to make our relations more robust and to catch edge cases. Lastly, we were curious how http client libraries work in Prolog and had fun experimenting trying to convert JSON to prolog.
+
+### How this gives us the confidence to complete our MVP
+
+Right now most of the Haiku’s do not make much semantically, but by having the basic 5-7-5 structure of a Haiku laid out and having the necessary data to work with (parts of speech and number of syllables), we can focus more of our time in the MVP on improving the grammar of our Haiku’s.
+
+### Running the code
+
+- `cd` into the `prolog` directory
+- run `swipl src.pl`
+- enter the query `?- start.`
+> Note there is no need for an API key because the Datamuse API is free.
+- Remarks:
+    - the query `?- start.` will prompt you to enter a 1-5 topics you want for your haiku. Please enter them in comma separated values. Some topics to try can be:
+        - "soccer,basketball"
+        - "autumn,leaves,orange"
+        - anything you're curious about!
+    - Notice how each line in our haiku adheres to the 5-7-5 syllable structure.
+- Some intereseting cases to try
+    - You can press `;` to see different variations of the haiku generated, each time differing in one word.
+    - load `swipl api.pl` and try the query `?- get_words(‘topic1,topic2’, Words).` Replace the first term with a comma separated list of topics you’re interested in. This will call the API and give a list of words expressed in a compound terms.
+
+### Testing the code
+From the `prolog` directory, run `swipl -g run_tests -t halt test.pl`
+
+Some of our main test groups testing core logic of our proof of concept
+- [convert_to_words/2 tests](https://github.students.cs.ubc.ca/ngduy28/cpsc-312-project-prolog/blob/e3d3a2959ad35c821d0deaf29684ebbb2209a826/prolog/test.pl#L17)
+- [random_word_syllable/4 tests](https://github.students.cs.ubc.ca/ngduy28/cpsc-312-project-prolog/blob/e3d3a2959ad35c821d0deaf29684ebbb2209a826/prolog/test.pl#L42)
+- [pick_random_word/3 tests](https://github.students.cs.ubc.ca/ngduy28/cpsc-312-project-prolog/blob/e3d3a2959ad35c821d0deaf29684ebbb2209a826/prolog/test.pl#L112)
+- [same_syllable/2, same_parts_of_speech/2, get_value/2 tests](https://github.students.cs.ubc.ca/ngduy28/cpsc-312-project-prolog/blob/e3d3a2959ad35c821d0deaf29684ebbb2209a826/prolog/test.pl#L136) 
