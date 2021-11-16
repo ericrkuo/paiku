@@ -34,19 +34,26 @@ These are some questions we were curious about when first learning Prolog and by
 In our proof-of-concept (POC), we employed various new language elements and concepts learned in class in order to explore the robustness and unique strengths of Prolog. With the basic functionality for Paiku down, we can focus more time on really leveraging the full capabilities of Prolog. We plan on refining the following concepts and incorporating the specified features:
 
 ### Expressing Grammer and Definite Clause Grammaers (DCGs)
-- Our current POC parses and filters words by their Parts of Speech (PoS) identifier, but not to its full extent as each line in our haiku has a very limited grammatical structure. As such, we plan on using these identifiers to "place" words into their syntactically correct positions. This can be accomplished using [DCGs](https://en.wikipedia.org/wiki/Definite_clause_grammar) and leveraging Prolog's abilities to represent languages/grammar. As a result, we could be able to express more complex grammatical relationships in our haikus.
+
+Our current POC parses and filters words by their Parts of Speech (PoS) identifier, but not to its full extent as each line in our haiku has a very limited grammatical structure. As such, we plan on using these identifiers to "place" words into their syntactically correct positions. This can be accomplished using [DCGs](https://en.wikipedia.org/wiki/Definite_clause_grammar) and leveraging Prolog's abilities to represent languages/grammar. As a result, we could be able to express more complex grammatical relationships in our haikus.
 
 ### APIs and error handling
-- Our POC gave us an opportunity to explore how HTTP requests are handled in Prolog. We used the [Datamuse API](https://www.datamuse.com/api/) to generate words and parse the metadata from them (e.g. number of syllables, parts of speech).
-- We also plan on exploring industry standards for error handling in Prolog. An area we want to focus on is handling situations where our API calls fail. Some ideas we want to learn are how to make our predicates more robust. For example, how we can propagate error messages from the API to the user, or perform some behaviour based on the error codes returned from the API.
+
+Our POC gave us an opportunity to explore how HTTP requests are handled in Prolog. We used the [Datamuse API](https://www.datamuse.com/api/) to generate words and parse the metadata from them (e.g. number of syllables, parts of speech).
+
+We also plan on exploring industry standards for error handling in Prolog. An area we want to focus on is handling situations where our API calls fail. Some ideas we want to learn are how to make our predicates more robust. For example, how we can propagate error messages from the API to the user, or perform some behaviour based on the error codes returned from the API.
 
 ### Extend parts of speech identifiers. 
-- The Datamuse API is used primarily for finding words relating to some topic. However, the API does not have much support for other PoS identifiers like prepositions, determiners, particles, and modifiers. In our MVP, we plan on manually adding words from these parts of speech categories so that the grammatical structure of our haiku's can be improved.
+
+The Datamuse API is used primarily for finding words relating to some topic. However, the API does not have much support for other PoS identifiers like prepositions, determiners, particles, and modifiers. In our MVP, we plan on manually adding words from these parts of speech categories so that the grammatical structure of our haiku's can be improved.
 
 ### Flashy Features - two features that we think could be fun and educative to explore:
-- We acknolwedge that these features may not be feasible in the timeline we have, but are concepts we are curious about and plan on exploring outside of CPSC 312.
-- NLP - some way to improve the accuracy of our Haiku by providing more powerful natural language processing methods that involve AI. This way, we could potentially introduce more complex language and poetic devices such as tonality, word sounds (i.e. plosives, sibilance, etc.), and word connotations.
-- Text to Speech - a neat fun feature that we could implement to make Paiku more interactive. Generated Haikus could be read aloud via some package or lirary. 
+
+We acknolwedge that these features may not be feasible in the timeline we have, but are concepts we are curious about and plan on exploring outside of CPSC 312.
+
+NLP - some way to improve the accuracy of our Haiku by providing more powerful natural language processing methods that involve AI. This way, we could potentially introduce more complex language and poetic devices such as tonality, word sounds (i.e. plosives, sibilance, etc.), and word connotations.
+
+Text to Speech - a neat fun feature that we could implement to make Paiku more interactive. Generated Haikus could be read aloud via some package or lirary. 
 
 ## Proof of Concept
 
