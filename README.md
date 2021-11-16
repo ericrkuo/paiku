@@ -8,8 +8,8 @@ This project is in fulfillment of the [CPSC 312 2021W1 project requirements](htt
 
 Our team is:
 
-+ Eric Kuo
-+ Duy Nguyen
++ Eric Kuo (58163288)
++ Duy Nguyen (95844189)
 
 ## Product Pitch
 A Prolog Haiku ([credits]()):
@@ -37,7 +37,7 @@ In our proof-of-concept (POC), we employed various new language elements in orde
 - Our current POC parses and filters words by their Parts of Speech (PoS) identifier, but not to its full extent as each line in our haiku has a very limited grammatical structure. As such, we plan on using these identifiers to "place" words into their syntactically correct positions. This can be accomplished using DCGs to express more complex grammatical relationships in our haikus.
 
 ### APIs and error handling
-- Our POC gave us an opportunity to further explore how HTTP requests are handled in Prolog. We used the [Datamuse API](https://www.datamuse.com/api/) to generate words and parse the metadata from them (e.g. number of syllables, parts of speech).
+- Our POC gave us an opportunity to explore how HTTP requests are handled in Prolog. We used the [Datamuse API](https://www.datamuse.com/api/) to generate words and parse the metadata from them (e.g. number of syllables, parts of speech).
 - We also plan on exploring industry standards for error handling in Prolog. An area in our code we want to focus on is handling situations where our API calls fail. 
 - Some ideas we want to learn are how to make our predicates more robust. For example, how we can propagate error messages from the API to the user, or perform some behaviour based on the error codes returned from the API.
 
@@ -62,7 +62,7 @@ These predicates rely on [random_word_syllable/4](https://github.students.cs.ubc
 - This was also an opportunity for us to explore and take advantage of Prolog's built-in predicates for operating on lists such as [include/3](https://www.swi-prolog.org/pldoc/doc_for?object=include/3) and [maplist/2](https://www.swi-prolog.org/pldoc/man?predicate=maplist/2).
 
 ### 2. Gathering a dataset of words and parsing metadata
-We leveraged the word-finding capabilities of the [datamuse API](https://www.datamuse.com/api/) to get our dataset of words. The API endpoint `/words` procuces the number of syllables for each word returned and lists out the parts of speech identifiers. An example response form the API is:
+We leveraged the word-finding capabilities of the [datamuse API](https://www.datamuse.com/api/) to get our dataset of words. The API endpoint `/words` procuces the number of syllables for each word returned and lists out the parts of speech identifiers. An example response from the API is:
 
 ```json
 // GET request https://api.datamuse.com/words?max=500&md=sp&topics=burger,soccer,basketball
@@ -82,7 +82,8 @@ We leveraged the word-finding capabilities of the [datamuse API](https://www.dat
         "tags": [
             "n"
         ]
-    }
+    },
+    ...
 ]
 ```
 
@@ -111,7 +112,7 @@ Getting the dataset of words and defining predicates to express the 5-7-5 struct
 
 ### How this gives us the confidence to complete our MVP
 
-Right now most of the Haiku’s do not make much semantically, but by having the basic 5-7-5 structure of a Haiku laid out and having the necessary data to work with (parts of speech and number of syllables), we can focus more of our time in the MVP on improving the grammar of our Haiku’s.
+Right now most of the Haiku’s do not make much semantically, but by having the basic 5-7-5 structure of a Haiku laid out and the necessary data to work with (parts of speech and number of syllables), we can focus more of our time in the MVP on improving the grammar of our Haiku’s.
 
 ### Running the code
 
@@ -120,14 +121,14 @@ Right now most of the Haiku’s do not make much semantically, but by having the
 - enter the query `?- start.`
 > Note there is no need for an API key because the Datamuse API is free.
 - Remarks:
-    - the query `?- start.` will prompt you to enter a 1-5 topics you want for your haiku. Please enter them in comma separated values. Some topics to try can be:
+    - the query `?- start.` will prompt you to enter a 1-5 topics you want for your haiku. Please enter them in comma separated values. Some topics to try can be (without the quotation marks):
         - "soccer,basketball"
         - "autumn,leaves,orange"
         - anything you're curious about!
     - Notice how each line in our haiku adheres to the 5-7-5 syllable structure.
 - Some intereseting cases to try
-    - You can press `;` to see different variations of the haiku generated, each time differing in one word.
-    - load `swipl api.pl` and try the query `?- get_words(‘topic1,topic2’, Words).` Replace the first term with a comma separated list of topics you’re interested in. This will call the API and give a list of words expressed in a compound terms.
+    - You can press `;` to see different variations of the haiku generated
+    - load `swipl api.pl` and try the query `?- get_words(‘topic1,topic2’, Words).` Replace the first term with a comma separated list of topics you’re interested in. This will call the API and give a list of compound terms, `word(Value, NumSyllables, PoS)`.
 
 ### Testing the code
 From the `prolog` directory, run `swipl -g run_tests -t halt test.pl`
