@@ -1,4 +1,4 @@
-# Paiku??? (play on prolog and haiku lol idk)
+# Paiku (prolog + haiku)
 
 Using the robust pattern-matching and unification strengths of Prolog, our project will generate English haikus that will hopefully make semantic and grammatical sense.
 
